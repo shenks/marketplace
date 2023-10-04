@@ -11,7 +11,7 @@ app.use(express.static(__dirname + "/public", { maxAge: 0 }));
 
 //routes
 app.get("/", function (req, res) {
-  res.render("home");
+  res.render("index");
 });
 
 app.get("/signup", function (req, res) {
