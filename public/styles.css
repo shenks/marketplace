@@ -185,11 +185,21 @@ main {
   font-size: 16px;
 }
 
-.form-items button.btn {
-  display: block;
+.form-items button.login-btn {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-items button.signup-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #27aa36;
   color: #fff;
   border: none;
   border-radius: 5px;
