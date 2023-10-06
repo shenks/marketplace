@@ -1,3 +1,5 @@
 head.ejs
 header.ejs
 index.ejs
+login.ejs
+signup.ejs

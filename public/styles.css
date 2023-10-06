@@ -121,3 +121,92 @@ main {
 }
 
 /* ========== end of footer styling ========== */
+
+/* ========== form styling ========== */
+
+.typewriter h1 {
+  color: black;
+  overflow: hidden;
+  border-right: 0.15em solid orange;
+  white-space: nowrap;
+  margin: 20px auto;
+  letter-spacing: 0.15em;
+}
+
+.typewriter h1 { 
+  animation: typing 1000ms steps(20, end), blink-caret 0.5s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+     width: 0;
+  }
+  to {
+    width: 100%;
+ }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: orange;
+ }
+  50% {
+    border-color: transparent;
+ }
+}
+
+.form {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.form-items {
+  max-width: 1000px; 
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-items label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-items input[type="password"],
+.form-items input[type="email"] {
+  width: 500px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-items button.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#switch-form {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#switch-form a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+#switch-form a:hover {
+  text-decoration: underline;
+}
