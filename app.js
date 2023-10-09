@@ -51,6 +51,10 @@ mongoose.connect(
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
+  isadmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //========================================================================
@@ -100,13 +104,14 @@ app.get("/login", function (req, res) {
   res.render("login", { user: req.user });
 });
 
-app.get("/success", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("success", { user: req.user });
-  } else {
-    res.redirect("/login");
-  }
-});
+//needed to test if login success
+// app.get("/success", function (req, res) {
+//   if (req.isAuthenticated()) {
+//     res.render("success", { user: req.user });
+//   } else {
+//     res.redirect("/login");
+//   }
+// });
 
 app.post("/signup", function (req, res) {
   User.register(
@@ -115,10 +120,10 @@ app.post("/signup", function (req, res) {
     function (err, user) {
       if (err) {
         console.log(err);
-        res.redirect("/");
+        res.redirect("/signup");
       } else {
         passport.authenticate("local")(req, res, function () {
-          res.redirect("/success");
+          res.redirect("/");
         });
       }
     }
@@ -135,7 +140,7 @@ app.post("/login", function (req, res) {
       console.log(err);
     } else {
       passport.authenticate("local")(req, res, function () {
-        res.redirect("/success");
+        res.redirect("/");
       });
     }
   });
