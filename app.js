@@ -82,22 +82,27 @@ passport.deserializeUser(function (id, done) {
 });
 //========================================================================
 
+app.use(function (req, res, next) {
+  res.locals.req = req;
+  next();
+});
+
 //routes
 app.get("/", function (req, res) {
-  res.render("index");
+  res.render("index", { user: req.user });
 });
 
 app.get("/signup", function (req, res) {
-  res.render("signup");
+  res.render("signup", { user: req.user });
 });
 
 app.get("/login", function (req, res) {
-  res.render("login");
+  res.render("login", { user: req.user });
 });
 
 app.get("/success", function (req, res) {
   if (req.isAuthenticated()) {
-    res.render("success");
+    res.render("success", { user: req.user });
   } else {
     res.redirect("/login");
   }
@@ -110,7 +115,7 @@ app.post("/signup", function (req, res) {
     function (err, user) {
       if (err) {
         console.log(err);
-        res.redirect("/signup");
+        res.redirect("/");
       } else {
         passport.authenticate("local")(req, res, function () {
           res.redirect("/success");
@@ -121,7 +126,42 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  //
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+  });
+  req.login(user, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      passport.authenticate("local")(req, res, function () {
+        res.redirect("/success");
+      });
+    }
+  });
+});
+
+app.post("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+
+app.get("/logout", function (req, res) {
+  req.logout(function (err) {
+    if (err) {
+      console.error("Error during logout:", err);
+    }
+    res.redirect("/");
+  });
+});
+
+//post login routes
+app.get("/profile", function (req, res) {
+  res.render("profile", { user: req.user });
 });
 
 app.listen(3000, function () {
