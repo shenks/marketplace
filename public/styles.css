@@ -123,7 +123,7 @@ main {
 
 /* ========== end of footer styling ========== */
 
-/* ========== form styling ========== */
+/* ========== login/signup form styling ========== */
 
 .typewriter h1 {
   color: black;
@@ -221,3 +221,67 @@ main {
 #switch-form a:hover {
   text-decoration: underline;
 }
+
+/* ========== dashboard form styling ========== */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.add-item-container {
+  width: 600px;
+  margin-right: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ee9c2a;
+}
+
+.existing-items-container {
+  width: 600px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ee9c2a;
+}
+
+.dashboard-form {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.form-group input {
+  flex: 1;
+  height: 30px;
+  font-size: 15px;
+}
+
+.form-group textarea {
+  flex: 1;
+  height: 150px;
+  font-size: 15px;
+}
+
+.dashboard-button {
+  background-color: #27aa36;
+  margin-top: 20px;
+  height: 50px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+

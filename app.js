@@ -13,7 +13,6 @@ const passportLocalMongoose = require("passport-local-mongoose");
 //oauth
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
-//
 
 const app = express();
 
@@ -21,6 +20,11 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public", { maxAge: 0 }));
+
+//========================================================================
+//products router
+const productsRouter = require("./routes/products.routes");
+app.use("/products", productsRouter);
 
 //========================================================================
 //fyi https://www.npmjs.com/package/express-session
@@ -86,6 +90,7 @@ passport.deserializeUser(function (id, done) {
 });
 //========================================================================
 
+//middleware making req avail in views
 app.use(function (req, res, next) {
   res.locals.req = req;
   next();
@@ -101,17 +106,16 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/login", function (req, res) {
-  res.render("login", { user: req.user });
+  if (req.isAuthenticated()) {
+    if (req.user.isadmin) {
+      res.redirect("/dashboard");
+    } else {
+      res.redirect("/profile");
+    }
+  } else {
+    res.render("login", { user: req.user });
+  }
 });
-
-//needed to test if login success
-// app.get("/success", function (req, res) {
-//   if (req.isAuthenticated()) {
-//     res.render("success", { user: req.user });
-//   } else {
-//     res.redirect("/login");
-//   }
-// });
 
 app.post("/signup", function (req, res) {
   User.register(
@@ -138,9 +142,14 @@ app.post("/login", function (req, res) {
   req.login(user, function (err) {
     if (err) {
       console.log(err);
+      res.redirect("/login");
     } else {
       passport.authenticate("local")(req, res, function () {
-        res.redirect("/");
+        if (req.user && req.user.isadmin) {
+          res.redirect("/dashboard");
+        } else {
+          res.redirect("/");
+        }
       });
     }
   });
@@ -167,6 +176,14 @@ app.get("/logout", function (req, res) {
 //post login routes
 app.get("/profile", function (req, res) {
   res.render("profile", { user: req.user });
+});
+
+app.get("/dashboard", function (req, res) {
+  if (req.isAuthenticated() && req.user.isadmin) {
+    res.render("admin/dashboard", { user: req.user });
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.listen(3000, function () {

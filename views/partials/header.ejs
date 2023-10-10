@@ -11,8 +11,12 @@
 
     <div class="nav-links">
       <ul>
-        <% if (user && req.isAuthenticated()) { %>
-          <li>hi, <%= user.email %> |</li>
+        <% if (user && req.isAuthenticated() && user.isadmin) { %>
+          <li>Hi, <%= user.email %> |</li>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+        <% } else if (user && req.isAuthenticated()) { %>
+          <li>Hi, <%= user.email %> |</li>
           <li><a href="/logout">Logout</a></li>
           <li><a href="/profile">Profile</a></li>
         <% } else { %>
