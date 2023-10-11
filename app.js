@@ -4,6 +4,7 @@ const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const Product = require("./models/products.models");
 
 //for session management
 const session = require("express-session");
@@ -20,11 +21,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public", { maxAge: 0 }));
-
-//========================================================================
-//products router
-const productsRouter = require("./routes/products.routes");
-app.use("/products", productsRouter);
+app.use("/public/uploads", express.static("public/uploads"));
 
 //========================================================================
 //fyi https://www.npmjs.com/package/express-session
@@ -96,9 +93,23 @@ app.use(function (req, res, next) {
   next();
 });
 
+//========================================================================
+//products router
+const productsRouter = require("./routes/products.routes");
+app.use("/", productsRouter);
+
 //routes
-app.get("/", function (req, res) {
-  res.render("index", { user: req.user });
+app.get("/", async function (req, res) {
+  try {
+    const products = await Product.find({}).exec();
+    res.render("index", {
+      user: req.user,
+      existingProducts: products,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error fetching products" });
+  }
 });
 
 app.get("/signup", function (req, res) {
@@ -176,14 +187,6 @@ app.get("/logout", function (req, res) {
 //post login routes
 app.get("/profile", function (req, res) {
   res.render("profile", { user: req.user });
-});
-
-app.get("/dashboard", function (req, res) {
-  if (req.isAuthenticated() && req.user.isadmin) {
-    res.render("admin/dashboard", { user: req.user });
-  } else {
-    res.redirect("/login");
-  }
 });
 
 app.listen(3000, function () {
