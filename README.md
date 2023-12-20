@@ -7,5 +7,3 @@ frontend, registration page, route handling
 
 week 2:
 user db, item db, stripe integration
-
-Thanks terence uwu.
