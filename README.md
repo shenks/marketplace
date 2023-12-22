@@ -1,4 +1,4 @@
-### `Preview` 👀
+### `Preview` 👀 Showcasing login and signup functionality
 ![Marketplace Preview](https://github.com/shenks/marketplace/blob/main/marketplace_preview.gif)
 
 ### `Outline of Steps Taken to build:`🪜
