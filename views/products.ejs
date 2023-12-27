@@ -1,0 +1,14 @@
+<body>
+  <main>
+    <div class="product-page">
+      <% existingProducts.forEach((product) => { %>
+      <div class="product-page-item">
+        <img src="<%= product.imageUrl %>" class="product-image" />
+        <h3><%= product.name %></h3>
+        <p><%= product.description %></p>
+        <p>Price: $<%= product.price.toFixed(2) %></p>
+      </div>
+      <% }); %>
+    </div>
+  </main>
+</body>
